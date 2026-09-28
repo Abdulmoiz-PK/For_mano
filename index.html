@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Ayeza Mano ✨</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.2);
+            text-align: center;
+            max-width: 450px;
+            width: 100%;
+            border: 2px solid #ffb6c1;
+        }
+
+        h1 {
+            color: #ff3366;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        .heart-icon {
+            font-size: 50px;
+            animation: beat 1s infinite alternate;
+            margin: 15px 0;
+        }
+
+        @keyframes beat {
+            to { transform: scale(1.15); }
+        }
+
+        .message-box {
+            background: #fff0f3;
+            border-left: 4px solid #ff3366;
+            padding: 15px;
+            border-radius: 8px;
+            color: #444;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff3366, #ff6b8b);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 51, 102, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 51, 102, 0.4);
+        }
+
+        .secret-msg {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-radius: 12px;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Welcome Ayeza Mano! ✨</h1>
+        <div class="heart-icon">💖</div>
+        <p class="subtitle">A special corner on the web just for you.</p>
+
+        <div class="message-box">
+            "True friendship is like a warm cup of tea on a cold day—always comforting and special. Thank you for being such an awesome friend!" 🌸
+        </div>
+
+        <button class="btn" onclick="showMessage()">Tap for a Secret Note 💌</button>
+
+        <div id="secret" class="secret-msg">
+            🌟 You bring light and smiles wherever you go! Always stay happy and keep shining! ✨
+        </div>
+    </div>
+
+    <script>
+        function showMessage() {
+            var msg = document.getElementById('secret');
+            if (msg.style.display === "block") {
+                msg.style.display = "none";
+            } else {
+                msg.style.display = "block";
+            }
+        }
+    </script>
+
+</body>
+</html>
