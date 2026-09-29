@@ -1,134 +1,662 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Ayeza Mano ✨</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>For Ayeza Mano ♡</title>
+  <!-- Google Fonts for Premium Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-        body {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+  <style>
+    /* ==================== RESET & GLOBALS ==================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        .container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.2);
-            text-align: center;
-            max-width: 450px;
-            width: 100%;
-            border: 2px solid #ffb6c1;
-        }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: linear-gradient(-45deg, #2b0b14, #4a1525, #681d33, #3a101d);
+      background-size: 400% 400%;
+      animation: gradientBG 18s ease infinite;
+      color: #fff0f3;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
 
-        h1 {
-            color: #ff3366;
-            font-size: 28px;
-            margin-bottom: 15px;
-        }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-        .subtitle {
-            color: #666;
-            font-size: 16px;
-            margin-bottom: 25px;
-        }
+    /* ==================== ANIMATED CANVAS BACKGROUND ==================== */
+    #particleCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
 
-        .heart-icon {
-            font-size: 50px;
-            animation: beat 1s infinite alternate;
-            margin: 15px 0;
-        }
+    /* Dim layer for special message focus */
+    #dimOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 3, 8, 0.45);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1.5s ease;
+      z-index: 2;
+    }
 
-        @keyframes beat {
-            to { transform: scale(1.15); }
-        }
+    /* ==================== CONTAINER & CARDS ==================== */
+    .app-container {
+      width: 100%;
+      max-width: 440px;
+      padding: 20px;
+      z-index: 3;
+      position: relative;
+    }
 
-        .message-box {
-            background: #fff0f3;
-            border-left: 4px solid #ff3366;
-            padding: 15px;
-            border-radius: 8px;
-            color: #444;
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 25px;
-            text-align: left;
-        }
+    .page {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      width: 100%;
+    }
 
-        .btn {
-            background: linear-gradient(45deg, #ff3366, #ff6b8b);
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 51, 102, 0.3);
-            transition: all 0.3s ease;
-        }
+    .page.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 51, 102, 0.4);
-        }
+    .glass-card {
+      background: rgba(255, 192, 203, 0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 215, 225, 0.22);
+      border-radius: 28px;
+      padding: 32px 24px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), inset 0 0 15px rgba(255, 182, 193, 0.15);
+      position: relative;
+      overflow: hidden;
+      animation: floatCard 6s ease-in-out infinite;
+      text-align: center;
+    }
 
-        .secret-msg {
-            display: none;
-            margin-top: 20px;
-            padding: 15px;
-            background: #e8f5e9;
-            color: #2e7d32;
-            border-radius: 12px;
-            font-weight: bold;
-            animation: fadeIn 0.5s ease-in;
-        }
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    /* Subtle light beam sweep effect */
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.03),
+        rgba(255, 192, 203, 0.08),
+        transparent
+      );
+      transform: rotate(30deg);
+      animation: lightSweep 8s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes lightSweep {
+      0% { transform: translateY(-100%) rotate(30deg); }
+      100% { transform: translateY(100%) rotate(30deg); }
+    }
+
+    /* ==================== TYPOGRAPHY & TEXT EFFECTS ==================== */
+    .header-name {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.3rem;
+      color: #ffccd5;
+      text-shadow: 0 0 12px rgba(255, 182, 193, 0.6);
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+
+    .glow-text {
+      text-shadow: 0 0 10px rgba(255, 182, 193, 0.8), 0 0 20px rgba(255, 105, 180, 0.4);
+    }
+
+    h2.heading {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      color: #fff0f3;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+
+    p.paragraph {
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: #ffe6ea;
+      margin-bottom: 20px;
+      font-weight: 300;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: opacity 1s ease, transform 1s ease;
+      text-align: left;
+    }
+
+    p.paragraph.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .highlight-span {
+      color: #ffffff;
+      font-weight: 500;
+      position: relative;
+      display: inline-block;
+    }
+
+    .sparkle-inline {
+      position: relative;
+    }
+
+    .sparkle-inline::after {
+      content: '✨';
+      position: absolute;
+      font-size: 0.8rem;
+      top: -8px;
+      right: -12px;
+      animation: sparklePulse 2s ease-in-out infinite;
+    }
+
+    @keyframes sparklePulse {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .infinity-symbol {
+      display: inline-block;
+      animation: infinityPulse 2s infinite ease-in-out;
+      color: #ffb3c1;
+    }
+
+    @keyframes infinityPulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px #ffb3c1); }
+      50% { transform: scale(1.3); filter: drop-shadow(0 0 10px #ff4d6d); }
+    }
+
+    .special-final-line {
+      font-weight: 600;
+      color: #ffffff;
+      font-size: 1.05rem;
+      text-align: center;
+      padding: 12px 8px;
+      border-radius: 12px;
+      background: rgba(255, 182, 193, 0.1);
+      border: 1px solid rgba(255, 182, 193, 0.2);
+    }
+
+    .signature {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.8rem;
+      color: #ffccd5;
+      text-align: right;
+      margin-top: 24px;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+
+    .signature.visible {
+      opacity: 1;
+    }
+
+    /* ==================== BUTTONS ==================== */
+    .btn-pink {
+      background: linear-gradient(135deg, #ff758f, #ff4d6d);
+      border: none;
+      color: #ffffff;
+      padding: 14px 28px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255, 77, 109, 0.5), 0 4px 15px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 10px;
+      letter-spacing: 0.5px;
+      animation: btnGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes btnGlow {
+      0%, 100% { box-shadow: 0 0 12px rgba(255, 77, 109, 0.4); }
+      50% { box-shadow: 0 0 24px rgba(255, 117, 143, 0.8); }
+    }
+
+    .btn-pink:active {
+      transform: scale(0.96);
+    }
+
+    /* Ripple Effect */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+      transform: scale(0);
+      animation: rippleAnim 0.6s linear;
+      pointer-events: none;
+    }
+
+    @keyframes rippleAnim {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* Typing Cursor Effect */
+    .typing-text {
+      border-right: 2px solid rgba(255, 204, 213, 0.75);
+      white-space: pre-wrap;
+      animation: blinkCursor 0.8s step-end infinite;
+    }
+
+    @keyframes blinkCursor {
+      from, to { border-color: transparent; }
+      50% { border-color: rgba(255, 204, 213, 0.75); }
+    }
+
+    /* Screen Shake/Burst effect container */
+    .burst-heart {
+      position: fixed;
+      pointer-events: none;
+      font-size: 1.5rem;
+      z-index: 100;
+      animation: burstFly 1.2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+    }
+
+    @keyframes burstFly {
+      0% { opacity: 1; transform: translate(0, 0) scale(0.5); }
+      100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(1.4); }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Welcome Ayeza Mano! ✨</h1>
-        <div class="heart-icon">💖</div>
-        <p class="subtitle">A special corner on the web just for you.</p>
+  <!-- Floating particles background canvas -->
+  <canvas id="particleCanvas"></canvas>
+  <div id="dimOverlay"></div>
 
-        <div class="message-box">
-            "True friendship is like a warm cup of tea on a cold day—always comforting and special. Thank you for being such an awesome friend!" 🌸
-        </div>
+  <div class="app-container">
 
-        <button class="btn" onclick="showMessage()">Tap for a Secret Note 💌</button>
+    <!-- PAGE 1: OPENING -->
+    <div id="page1" class="page active">
+      <div class="glass-card">
+        <div class="header-name glow-text">♡ 𝑨𝒚𝒆𝒛𝒂 𝑴𝒂𝒏𝒐 ♡</div>
+        <h2 class="heading" id="typewriterHeading"></h2>
+        
+        <p class="paragraph visible" id="p1-text" style="text-align: center; margin-top: 15px;">
+          There’s something I wanted to tell you…
+        </p>
 
-        <div id="secret" class="secret-msg">
-            🌟 You bring light and smiles wherever you go! Always stay happy and keep shining! ✨
-        </div>
+        <button class="btn-pink" id="btnPage1">
+          <span>♡ Open My Message →</span>
+        </button>
+      </div>
     </div>
 
-    <script>
-        function showMessage() {
-            var msg = document.getElementById('secret');
-            if (msg.style.display === "block") {
-                msg.style.display = "none";
-            } else {
-                msg.style.display = "block";
-            }
-        }
-    </script>
+    <!-- PAGE 2: MAIN MESSAGE -->
+    <div id="page2" class="page">
+      <div class="glass-card">
+        <div class="header-name glow-text">♡ 𝑨𝒚𝒆𝒛𝒂 𝑴𝒂𝒏𝒐 ♡</div>
+        <h2 class="heading glow-text" style="font-size: 1.25rem;">𝑨𝒍𝒘𝒂𝒚𝒔 𝑭𝒓𝒊𝒆𝒏𝒅𝒔?</h2>
 
+        <div id="messageContainer">
+          <p class="paragraph msg-p">
+            <span class="highlight-span glow-text">Ayeza Mano</span>, zindagi hamesha ek jaisi nahi rehti. Kabhi hum bohot zyada baat karte hain, kabhi busy hone ki wajah se baat kam ho jati hai. Kabhi misunderstandings hoti hain, kabhi choti moti fights bhi.
+          </p>
+
+          <p class="paragraph msg-p">
+            Lekin main bas itna chahta hoon ke in sab cheezon ki wajah se hamari dosti kabhi khatam na ho.
+          </p>
+
+          <p class="paragraph msg-p">
+            <span class="sparkle-inline">Ayeza Mano</span>, agar future mein hum dono ki lives change ho jayein, naye log aa jayein, ya hum pehle ki tarah roz baat na kar sakein, phir bhi main chahta hoon ke jab bhi hum ek dusre ko yaad karein, hamari friendship wahi special feel ho. 🫶🏻
+          </p>
+
+          <p class="paragraph msg-p">
+            I don’t want a temporary friendship with you. I want this friendship to stay for a really long time. <span class="infinity-symbol">♾️</span>
+          </p>
+
+          <p class="paragraph msg-p" id="triggerDimP">
+            So please, no matter what happens…
+          </p>
+
+          <p class="paragraph msg-p special-final-line" id="specialFinalP">
+            Don’t let this friendship end. 🤍
+          </p>
+        </div>
+
+        <div class="signature" id="sigPage2">— 𝑴𝒐𝒊𝒛 ♡</div>
+
+        <div style="margin-top: 25px;">
+          <button class="btn-pink" id="btnPage2">
+            <span>There’s One More Thing →</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 3: FINAL -->
+    <div id="page3" class="page">
+      <div class="glass-card" style="padding: 40px 24px;">
+        <h2 class="heading glow-text" style="font-size: 1.3rem; margin-bottom: 30px;">
+          𝑱𝒖𝒔𝒕 𝑹𝒆𝒎𝒆𝒎𝒃𝒆𝒓 𝑻𝒉𝒊𝒔…
+        </h2>
+
+        <p class="paragraph final-p" style="text-align: center;">
+          <span class="highlight-span">Ayeza Mano</span>, no matter how much things change, I hope our friendship always remains special. 🤍
+        </p>
+
+        <p class="paragraph final-p" style="text-align: center;">
+          Some friendships are too important to simply let go of.
+        </p>
+
+        <p class="paragraph final-p special-final-line" style="text-align: center; margin-top: 20px;">
+          <span class="infinity-symbol">♾️</span> Don’t let this friendship end.
+        </p>
+
+        <div class="signature" id="sigPage3" style="text-align: center; margin-top: 30px;">— 𝑴𝒐𝒊𝒛 ♡</div>
+
+        <div style="margin-top: 35px; text-align: center;">
+          <button class="btn-pink" id="btnReplay">
+            <span>↻ Replay</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    /* ==================== CANVAS ANIMATIONS (HEARTS, SPARKLES, PARTICLES) ==================== */
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const particles = [];
+    const particleCount = 45; // Optimized for smoothness on mobile
+
+    class Particle {
+      constructor() {
+        this.reset(true);
+      }
+
+      reset(initial = false) {
+        this.x = Math.random() * width;
+        this.y = initial ? Math.random() * height : height + 20;
+        this.size = Math.random() * 12 + 6; // Size for hearts/particles
+        this.speedY = Math.random() * 0.8 + 0.4;
+        this.speedX = Math.sin(Math.random() * Math.PI * 2) * 0.4;
+        this.type = Math.random() > 0.4 ? 'heart' : (Math.random() > 0.5 ? 'sparkle' : 'dot');
+        this.opacity = Math.random() * 0.6 + 0.3;
+        this.fadeSpeed = Math.random() * 0.005 + 0.002;
+        this.angle = Math.random() * 360;
+        this.spin = (Math.random() - 0.5) * 0.02;
+      }
+
+      update() {
+        this.y -= this.speedY;
+        this.x += Math.sin(this.y * 0.01) * 0.5 + this.speedX;
+        this.angle += this.spin;
+
+        if (this.type === 'sparkle') {
+          this.opacity += Math.sin(Date.now() * 0.005) * 0.01;
+        }
+
+        if (this.y < -30 || this.x < -20 || this.x > width + 20) {
+          this.reset(false);
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.globalAlpha = Math.max(0, Math.min(1, this.opacity));
+
+        if (this.type === 'heart') {
+          ctx.fillStyle = '#ffb3c1';
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = '#ff4d6d';
+          ctx.beginPath();
+          const topCurveHeight = this.size * 0.3;
+          ctx.moveTo(0, topCurveHeight);
+          ctx.bezierCurveTo(0, 0, -this.size / 2, 0, -this.size / 2, topCurveHeight);
+          ctx.bezierCurveTo(-this.size / 2, (this.size + topCurveHeight) / 2, 0, this.size, 0, this.size);
+          ctx.bezierCurveTo(0, this.size, this.size / 2, (this.size + topCurveHeight) / 2, this.size / 2, topCurveHeight);
+          ctx.bezierCurveTo(this.size / 2, 0, 0, 0, 0, topCurveHeight);
+          ctx.closePath();
+          ctx.fill();
+        } else if (this.type === 'sparkle') {
+          ctx.fillStyle = '#ffffff';
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = '#ffccd5';
+          ctx.beginPath();
+          for (let i = 0; i < 4; i++) {
+            ctx.lineTo(Math.cos((i * Math.PI) / 2) * this.size, Math.sin((i * Math.PI) / 2) * this.size);
+            ctx.lineTo(Math.cos((i * Math.PI) / 2 + Math.PI / 4) * (this.size / 3), Math.sin((i * Math.PI) / 2 + Math.PI / 4) * (this.size / 3));
+          }
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          ctx.fillStyle = '#ff85a1';
+          ctx.shadowBlur = 6;
+          ctx.shadowColor = '#ff1493';
+          ctx.beginPath();
+          ctx.arc(0, 0, this.size / 3, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    function animateCanvas() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateCanvas);
+    }
+    animateCanvas();
+
+    /* Sparkle/Heart Burst Generator on Click */
+    function triggerHeartBurst(originX, originY) {
+      const symbols = ['💖', '✨', '🌸', '🤍', '💗'];
+      for (let i = 0; i < 18; i++) {
+        const el = document.createElement('div');
+        el.className = 'burst-heart';
+        el.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+        const angle = Math.random() * Math.PI * 2;
+        const dist = 80 + Math.random() * 100;
+        const tx = Math.cos(angle) * dist;
+        const ty = Math.sin(angle) * dist;
+        
+        el.style.left = `${originX}px`;
+        el.style.top = `${originY}px`;
+        el.style.setProperty('--tx', `${tx}px`);
+        el.style.setProperty('--ty', `${ty}px`);
+
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 1200);
+      }
+    }
+
+    /* Button Ripple Animation */
+    document.querySelectorAll('.btn-pink').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const rect = this.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.left = `${e.clientX - rect.left}px`;
+        ripple.style.top = `${e.clientY - rect.top}px`;
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+
+        triggerHeartBurst(e.clientX, e.clientY);
+      });
+    });
+
+    /* ==================== PAGE NAVIGATION & SEQUENCING ==================== */
+    function navigateTo(fromId, toId) {
+      const fromPage = document.getElementById(fromId);
+      const toPage = document.getElementById(toId);
+
+      fromPage.classList.remove('active');
+      setTimeout(() => {
+        fromPage.style.display = 'none';
+        toPage.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => {
+          toPage.classList.add('active');
+          if (toId === 'page2') startPage2Sequencing();
+          if (toId === 'page3') startPage3Sequencing();
+        }, 50);
+      }, 700);
+    }
+
+    /* PAGE 1: TYPEWRITER HEADING */
+    const headingText = "A Little Something For You 🤍";
+    let typeIdx = 0;
+    function typeHeading() {
+      const el = document.getElementById('typewriterHeading');
+      if (typeIdx < headingText.length) {
+        el.classList.add('typing-text');
+        el.innerHTML += headingText.charAt(typeIdx);
+        typeIdx++;
+        setTimeout(typeHeading, 70);
+      } else {
+        el.classList.remove('typing-text');
+      }
+    }
+
+    window.addEventListener('load', () => {
+      setTimeout(typeHeading, 500);
+    });
+
+    document.getElementById('btnPage1').addEventListener('click', () => {
+      navigateTo('page1', 'page2');
+    });
+
+    /* PAGE 2: SEQUENTIAL PARAGRAPH REVEAL & SCROLL ANIMATION */
+    function startPage2Sequencing() {
+      const paragraphs = document.querySelectorAll('#messageContainer .msg-p');
+      const sig = document.getElementById('sigPage2');
+      const dimOverlay = document.getElementById('dimOverlay');
+
+      paragraphs.forEach((p, index) => {
+        setTimeout(() => {
+          p.classList.add('visible');
+
+          // Burst hearts around card when specific text arrives
+          if (index === 2) { // 3rd paragraph (special friendship)
+            const rect = p.getBoundingClientRect();
+            triggerHeartBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+          }
+
+          // Dim effect on final critical line
+          if (p.id === 'specialFinalP') {
+            dimOverlay.style.opacity = '1';
+            const rect = p.getBoundingClientRect();
+            triggerHeartBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+          }
+
+          // Show signature after all paragraphs reveal
+          if (index === paragraphs.length - 1) {
+            setTimeout(() => {
+              sig.classList.add('visible');
+            }, 800);
+          }
+        }, index * 1400); // Smooth reading delay between paragraphs
+      });
+    }
+
+    document.getElementById('btnPage2').addEventListener('click', () => {
+      document.getElementById('dimOverlay').style.opacity = '0';
+      navigateTo('page2', 'page3');
+    });
+
+    /* PAGE 3: FINAL PAGE SEQUENCING */
+    function startPage3Sequencing() {
+      const paragraphs = document.querySelectorAll('#page3 .final-p');
+      const sig = document.getElementById('sigPage3');
+
+      paragraphs.forEach((p, index) => {
+        setTimeout(() => {
+          p.classList.add('visible');
+
+          if (index === paragraphs.length - 1) {
+            // Massive subtle floating burst
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
+            triggerHeartBurst(cx, cy);
+
+            setTimeout(() => {
+              sig.classList.add('visible');
+            }, 800);
+          }
+        }, index * 1200);
+      });
+    }
+
+    /* REPLAY BUTTON */
+    document.getElementById('btnReplay').addEventListener('click', () => {
+      // Reset visibility classes
+      document.querySelectorAll('.msg-p, .final-p').forEach(p => p.classList.remove('visible'));
+      document.querySelectorAll('.signature').forEach(s => s.classList.remove('visible'));
+      document.getElementById('dimOverlay').style.opacity = '0';
+
+      navigateTo('page3', 'page1');
+    });
+  </script>
 </body>
 </html>
